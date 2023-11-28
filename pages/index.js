@@ -1,11 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import Layout from "../components/shared/layout";
+import HomeComponent from '../components/Home';
 
 
 const Home = ()=>{
     return (
         <ChakraProvider>
-            <Layout></Layout>
+            <HomeComponent></HomeComponent>
         </ChakraProvider>
     )
 }

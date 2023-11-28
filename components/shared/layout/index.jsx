@@ -388,7 +388,7 @@ const selectMenu = (
     <option value="option3">Option 3</option>
   </Select>
 );
-const Layout = () => {
+const Layout = ({children}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [menuClose, setMenuClose] = useState({
     type: false,
@@ -465,8 +465,6 @@ const Layout = () => {
                   </p>
                 )
               )}
-
-              <div></div>
             </div>
           </div>
         ))}
@@ -478,7 +476,7 @@ const Layout = () => {
     <>
       <DrawerComponent></DrawerComponent>
       {/* top menu design */}
-      <nav className="w-full border border-t-0 md:flex items-center p-3 px-8 justify-between hidden">
+      <nav className="w-full border border-t-0 md:flex items-center p-3 px-6 justify-between hidden">
         <div className="flex gap-5 items-center">
           <Link href="#" legacyBehavior>
             <a className="text-sm bg-red-400 text-white px-2 pb-[2px] rounded font-semibold block">
@@ -586,6 +584,15 @@ const Layout = () => {
           </div>
         </div>
       </nav>
+
+      {/* ########### section start ############## */}
+      <section className="px-6 py-4">
+            {
+              children
+            }
+      </section>
+
+      {/* ################ section complete ##################### */}
 
       {/* ###### header coding end ####### */}
 

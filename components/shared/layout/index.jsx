@@ -400,7 +400,7 @@ const Layout = ({children}) => {
   const btnRef = useRef();
 
   const designMenu = ()=>{
-    Math.floor(window.scrollY) >= 200 ? setHandleScroll(false) : setHandleScroll(true);
+    Math.floor(window.scrollY) > 199 ? setHandleScroll(false) : setHandleScroll(true);
     
    }
 

@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 @import "boxicons";
+
+*{
+    -webkit-tap-higlight-color:transparent;
+    tap-highlight-color: transparent;
+}
+
+:root {
+    --swiper-navigation-size: 20px !important;
+  }
+.swiper-button-next,.swiper-button-prev{
+    background-color:white;
+    width:50px !important;
+    height:50px !important;
+    box-shadow:2px 2px 15px 2px #ccc;
+    border-radius:50%;
+    color:black !important;
+    font-size: 24px !important;
+    margin-top:-80px !important;
+}

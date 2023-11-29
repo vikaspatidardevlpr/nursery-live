@@ -396,11 +396,19 @@ const Layout = ({children}) => {
     spacing: 0,
   });
   const [menuData, setMenuData] = useState([]);
+  const [handleScroll,setHandleScroll] = useState(true);
   const btnRef = useRef();
 
-  const handleScroll = () => {
-    alert();
-  };
+  const designMenu = ()=>{
+    Math.floor(window.scrollY) >= 200 ? setHandleScroll(false) : setHandleScroll(true);
+    
+   }
+
+    useEffect(()=>{
+        window.addEventListener("scroll",designMenu);
+        return ()=> {window.removeEventListener("scroll",designMenu)};   
+    },[])
+ 
 
   //   useEffect(() => {
   //     window.addEventListener("scroll", handleScroll);
@@ -499,11 +507,11 @@ const Layout = ({children}) => {
       </nav>
 
       {/* main menu design */}
-      <nav className="shadow">
-        <div className="flex flex-nowrap items-center justify-start px-6 gap-5 py-2 pt-4 md:py-5">
+      <nav className={`shadow sticky top-0 z-30 bg-white transition-all ${handleScroll ? 'md:h-32' : 'md:h-[70px] overflow-hidden'}`}>
+        <div className={`flex flex-nowrap items-center justify-start px-6 gap-5 py-2 pt-4 transition-all ${handleScroll ? 'md:py-5' : 'md:py-2'}`}>
           <div className="w-full md:w-auto md:shrink-0 flex items-center gap-4">
             <i
-              className="bx bx-menu-alt-left text-3xl cursor-pointer md:hidden"
+              className={`bx bx-menu-alt-left text-3xl cursor-pointer ${handleScroll ? 'md:hidden' : ''}`}
               onClick={onOpen}
               ref={btnRef}
             ></i>
@@ -558,7 +566,7 @@ const Layout = ({children}) => {
         </div>
 
         {/* ######## main menu coding start ######## */}
-        <div className="md:flex gap-6 px-6 pb-4 font-semibold relative hidden">
+        <div className='md:flex gap-6 px-6 pb-4 font-semibold relative hidden '>
           {mainMenu.map((menuItem, index) =>
             menuItem.nisted ? (
               <p
@@ -580,7 +588,7 @@ const Layout = ({children}) => {
             onMouseLeave={() => setMenuClose({ ...menuClose, type: false })}
             className={`${
               menuClose.type ? `h-auto p-4` : "h-0 p-0"
-            } z-10 absolute flex gap-16 top-8 bg-white w-fit overflow-hidden transition-all mx-4 shadow`}
+            } z-50 absolute flex gap-16 top-8 bg-white w-fit overflow-hidden transition-all mx-4 shadow`}
           >
             <NistedMenu data={menuData}></NistedMenu>
           </div>
@@ -588,7 +596,7 @@ const Layout = ({children}) => {
       </nav>
 
       {/* ########### section start ############## */}
-      <section className="px-6 py-4">
+      <section className="py-4">
             {
               children
             }

@@ -1,13 +1,3 @@
-import { ChakraProvider } from '@chakra-ui/react'
-import Layout from "../components/shared/layout";
 
-
-
-const Home = ()=>{
-    return (
-        <ChakraProvider>
-           <Layout></Layout>
-        </ChakraProvider>
-    )
-}
+import Home from '../components/home';
 export default Home;

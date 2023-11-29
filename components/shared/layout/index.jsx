@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
+import { ChakraProvider } from '@chakra-ui/react'
 import {
   Input,
   InputLeftAddon,
@@ -454,7 +455,7 @@ const Layout = ({children}) => {
               {nistedItem.content.map((list, index) =>
                 nistedItem.nisted ? (
                   <p key={index} className="py-4">
-                    {list} <i class="bx bx-chevron-right"></i>
+                    {list} <i className="bx bx-chevron-right"></i>
                   </p>
                 ) : (
                   <p
@@ -473,7 +474,7 @@ const Layout = ({children}) => {
   };
 
   return (
-    <>
+    <ChakraProvider>
       <DrawerComponent></DrawerComponent>
       {/* top menu design */}
       <nav className="w-full border border-t-0 md:flex items-center p-3 px-6 justify-between hidden">
@@ -492,7 +493,7 @@ const Layout = ({children}) => {
         {/* top menu icon design */}
         <div>
           {topMenuIcon.map((iconName, index) => (
-            <i className={`bx bxl-${iconName} text-lg text-[#949494] px-2`}></i>
+            <i key={index} className={`bx bxl-${iconName} text-lg text-[#949494] px-2`}></i>
           ))}
         </div>
       </nav>
@@ -502,7 +503,7 @@ const Layout = ({children}) => {
         <div className="flex flex-nowrap items-center justify-start px-6 gap-5 py-2 pt-4 md:py-5">
           <div className="w-full md:w-auto md:shrink-0 flex items-center gap-4">
             <i
-              class="bx bx-menu-alt-left text-3xl cursor-pointer md:hidden"
+              className="bx bx-menu-alt-left text-3xl cursor-pointer md:hidden"
               onClick={onOpen}
               ref={btnRef}
             ></i>
@@ -524,7 +525,7 @@ const Layout = ({children}) => {
           </div>
 
           <div className="flex items-center gap-2">
-            <i class="bx bx-conversation md:text-3xl text-2xl"></i>
+            <i className="bx bx-conversation md:text-3xl text-2xl"></i>
             <div className="hidden lg:block">
               <h1 className="font-semibold text-sm w-28">Expert Support</h1>
               <p className="text-sm">Available 24/7</p>
@@ -532,13 +533,13 @@ const Layout = ({children}) => {
           </div>
 
           <div className="lg:flex items-center gap-2 hidden">
-            <i class="bx bx-user text-3xl"></i>
+            <i className="bx bx-user text-3xl"></i>
             <div>
               <h1 className="font-semibold text-sm">Login</h1>
             </div>
           </div>
 
-          <i class="bx bx-cart md:text-3xl text-2xl"></i>
+          <i className="bx bx-cart md:text-3xl text-2xl"></i>
         </div>
 
         <div className="px-6 gap-5 py-2 md:hidden">
@@ -562,14 +563,15 @@ const Layout = ({children}) => {
             menuItem.nisted ? (
               <p
                 className="cursor-pointer"
+                key={index}
                 onMouseEnter={(e) => handlerMenu(e, menuItem)}
                 onMouseLeave={() => setMenuClose({ ...menuClose, type: false })}
               >
                 {menuItem.name}
-                <i class="bx bx-chevron-down"></i>
+                <i className="bx bx-chevron-down"></i>
               </p>
             ) : (
-              <p className="cursor-pointer">{menuItem.name}</p>
+              <p key={index} className="cursor-pointer">{menuItem.name}</p>
             )
           )}
           <div
@@ -606,25 +608,25 @@ const Layout = ({children}) => {
             </h1>
             <div className="flex gap-2">
               <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-facebook text-[#686868]"></i>
+                <i className="bx bxl-facebook text-[#686868]"></i>
               </div>
               <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-twitter text-[#686868]"></i>
-              </div>
-
-              <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-pinterest text-[#686868]"></i>
+                <i className="bx bxl-twitter text-[#686868]"></i>
               </div>
 
               <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-instagram-alt text-[#686868]"></i>
+                <i className="bx bxl-pinterest text-[#686868]"></i>
               </div>
 
               <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-youtube text-[#686868]"></i>
+                <i className="bx bxl-instagram-alt text-[#686868]"></i>
+              </div>
+
+              <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
+                <i className="bx bxl-youtube text-[#686868]"></i>
               </div>
               <div className="text-2xl bg-[#DFDED9] w-8 h-8 block rounded-full px-1 cursor-pointer transition-all hover:scale-110">
-                <i class="bx bxl-linkedin text-[#686868]"></i>
+                <i className="bx bxl-linkedin text-[#686868]"></i>
               </div>
             </div>
           </div>
@@ -652,7 +654,7 @@ const Layout = ({children}) => {
             Nurserylive: Largest Garden Store in India
           </h1>
           {lastFooterMenu.map((item, index) => (
-            <p className="font-semibold text-slate-600 text-sm pb-3 pr-4 text-justify">
+            <p key={index} className="font-semibold text-slate-600 text-sm pb-3 pr-4 text-justify">
               {item.name} <span className="font-normal">{item.content}</span>
             </p>
           ))}
@@ -665,7 +667,7 @@ const Layout = ({children}) => {
           <p className="text-slate-500">Copyright © 2023 Nurserylive.</p>
         </div>
       </footer>
-    </>
+      </ChakraProvider>
   );
 };
 

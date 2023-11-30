@@ -27,7 +27,7 @@ const cardData = [
     cutPrice: 458,
     price: 340,
     offer: "20%",
-    title: "Top 4 Die Hard Succulents Pack",
+    title: "Top 4 Die Hard Succulents PackTop 4 Die Hard Succulents PackTop 4 Die Hard Succulents Pack",
     rate: 3,
     offerTitle: "4+ Offers Inside",
     review: "382",
@@ -120,8 +120,8 @@ const cardData = [
 
 const SwiperCards = () => {
   return (
-    <div className="flex justify-center mt-10 py-8">
-      <div className="container md:min-h-[550px] py-0 my-0">
+    <div className="flex justify-center mt-10 pt-8">
+      <div className="container md:min-h-[500px] py-0 my-0">
         <h1 className="text-[20px] text-center font-semibold text-[#4D4D4D]">Value For Money - Upto 35% Off</h1>
         <Swiper
          breakpoints={{
@@ -145,15 +145,15 @@ const SwiperCards = () => {
         spaceBetween={10}
       >   
        {
-        cardData.map((item,index)=><SwiperSlide style={{height:"500px",padding:"8px"}} key={index}>
+        cardData.map((item,index)=><SwiperSlide style={{minHeight:"450px",padding:"5px"}} key={index}>
            <Cards data={item}></Cards>
         </SwiperSlide>)
        }
 
 
       </Swiper>
-      sfdsf
       </div>
+     
     </div>
   );
 };

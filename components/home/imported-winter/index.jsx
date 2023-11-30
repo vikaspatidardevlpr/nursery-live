@@ -30,9 +30,10 @@ const data = [
 ]
 const ImportedWinter = () => {
     return (
-        <section className="pb-8">
+       <div className="flex justify-center">
+         <div className="container py-8 lg:pt-0">
             <h1 className="text-[20px] font-semibold text-center">Imported Winter Flower Bulbs</h1>
-            <div className="flex mt-4 justify-around flex-wrap">
+            <div className="flex mt-4 justify-around flex-wrap px-2 lg:px-0">
                 {
                     data.map((item, index) => <div key={index} className="py-4 cursor-pointer">
                         <Image src={item.image} width={175} height={100} className="rounded-full" />
@@ -51,7 +52,8 @@ const ImportedWinter = () => {
                     View More
                 </Button>
             </div>
-        </section>
+        </div>
+       </div>
     )
 }
 

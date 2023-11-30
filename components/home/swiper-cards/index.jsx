@@ -145,7 +145,7 @@ const SwiperCards = () => {
         spaceBetween={10}
       >   
        {
-        cardData.map((item,index)=><SwiperSlide style={{minHeight:"450px",padding:"5px"}} key={index}>
+        cardData.map((item,index)=><SwiperSlide style={{minHeight:"500px",padding:"5px"}} key={index}>
            <Cards data={item}></Cards>
         </SwiperSlide>)
        }

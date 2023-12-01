@@ -128,7 +128,6 @@ const Popular = () => {
           </div>
           {/* ######### categry show######### */}
           <div className="p-8 bg-[#F8F8F8] mt-16 flex flex-col lg:flex-row items-center gap-16 lg:gap-0  justify-between">
-
             <div className="flex gap-2 items-start">
               <i class="bx bx-mobile-alt text-[#4D4D4D] text-6xl"></i>
               <div className="w-44">
@@ -142,46 +141,40 @@ const Popular = () => {
             </div>
 
             <div className="flex gap-2 items-start">
-            <i class='bx bx-group text-[#4D4D4D] text-6xl' ></i>
+              <i class="bx bx-group text-[#4D4D4D] text-6xl"></i>
               <div className="w-44">
                 <h1 className="text-[#4D4D4D] font-semibold text-[18px] pb-1">
-                Lifetime Support
+                  Lifetime Support
                 </h1>
                 <p className="text-[#4D4D4D]">
-                We help you grow your garden for lifetime
+                  We help you grow your garden for lifetime
                 </p>
               </div>
             </div>
-
 
             <div className="flex gap-2 items-start">
               <i class="bx bx-building-house text-[#4D4D4D] text-6xl"></i>
               <div className="w-44">
                 <h1 className="text-[#4D4D4D] font-semibold text-[18px] pb-1">
-                All India Delivery
+                  All India Delivery
                 </h1>
                 <p className="text-[#4D4D4D]">
-                Delivering greenery across India since 2014
+                  Delivering greenery across India since 2014
                 </p>
               </div>
             </div>
-
 
             <div className="flex gap-2 items-start">
-            <i class='bx bxs-truck bx-flip-horizontal text-[#4D4D4D] text-6xl' ></i>
+              <i class="bx bxs-truck bx-flip-horizontal text-[#4D4D4D] text-6xl"></i>
               <div className="w-44">
                 <h1 className="text-[#4D4D4D] font-semibold text-[18px] pb-1">
-                Secure Shipping
+                  Secure Shipping
                 </h1>
                 <p className="text-[#4D4D4D]">
-                 Diligent care taken to deliver healthy  plants
+                  Diligent care taken to deliver healthy plants
                 </p>
               </div>
             </div>
-
-
-            
-
           </div>
         </div>
       </div>

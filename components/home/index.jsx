@@ -3,6 +3,8 @@ import Hero from "./hero";
 import SwiperCards from "./swiper-cards";
 import ImportedWinter from "./imported-winter";
 import Popular from "./popular";
+import Tranding from "./tranding";
+import GardenDecor from "./garden-decor";
 const Home = ()=>{
     return (
         <Layout>
@@ -10,6 +12,8 @@ const Home = ()=>{
             <SwiperCards></SwiperCards>
             <ImportedWinter></ImportedWinter>
             <Popular></Popular>
+            <Tranding></Tranding>
+            <GardenDecor></GardenDecor>
         </Layout>
     )
 }

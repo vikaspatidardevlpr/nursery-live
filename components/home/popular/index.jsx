@@ -46,7 +46,7 @@ const Popular = () => {
           <h1 className="text-[20px] text-center py-8 font-semibold">
             Popular
           </h1>
-          <div className="flex lg:flex-row flex-col gap-2 px-2">
+          <div className="flex lg:flex-row flex-col gap-2 px-6">
             <div className="lg:w-[65%]">
               {data.map(
                 (item, index) =>

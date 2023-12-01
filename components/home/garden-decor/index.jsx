@@ -34,19 +34,18 @@ const data = [
 ];
 const GardenDecor = () => {
   return (
-    <>
       <div className="flex justify-center">
         <div className="container">
           <h1 className="text-[20px] text-center py-8 font-semibold">
           Garden Decor & Care
           </h1>
-            <div className="flex flex-wrap gap-4 justify-between px-16">
+            <div className="flex flex-wrap gap-4 justify-between px-6">
               {data.map(
                 (item, index) =>
                   item.primary && (
                     <div
                       key={index}
-                      className="md:h-[320px] cursor-pointer p-8 bg-[length:100%_100%] mb-6 w-[49%]"
+                      className="md:h-[320px] cursor-pointer p-8 bg-[length:100%_100%] mb-6 lg:w-[49%]"
                       style={{ backgroundImage: `url('${item.image}')` }}
                     >
                       <h1
@@ -81,7 +80,6 @@ const GardenDecor = () => {
             </div>
         </div>
       </div>
-    </>
   );
 };
 export default GardenDecor;

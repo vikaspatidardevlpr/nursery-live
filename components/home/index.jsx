@@ -5,6 +5,8 @@ import ImportedWinter from "./imported-winter";
 import Popular from "./popular";
 import Tranding from "./tranding";
 import GardenDecor from "./garden-decor";
+import Blog from "./blog";
+import Pramotation from "./pramotion";
 const Home = ()=>{
     return (
         <Layout>
@@ -14,6 +16,8 @@ const Home = ()=>{
             <Popular></Popular>
             <Tranding></Tranding>
             <GardenDecor></GardenDecor>
+            <Blog></Blog>
+            <Pramotation></Pramotation>
         </Layout>
     )
 }

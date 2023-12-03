@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -100,16 +101,21 @@ const swiperSection = [
   },
 ];
 const Hero = () => {
+  const router = useRouter();
+  const handler = (title)=>{
+      const titleFormat = title.replaceAll(" ","-");
+         router.push(`collections/${titleFormat}`)
+  }
   return (
     <>
       <div className="flex justify-center gap-4 flex-wrap">
-        {heroCategory.map((category, item) => (
-          <div>
+        {heroCategory.map((category, index) => 
+          <div onClick={()=>handler(category.name)}>
             <button className="md:w-24 md:h-24 w-20 h-20 rounded-full hover:scale-110 transition-all ">
               <img src={category.image} width="100%" height="100%" />
             </button>
           </div>
-        ))}
+        )}
       </div>
 
       <Swiper

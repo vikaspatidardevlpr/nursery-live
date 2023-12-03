@@ -23,7 +23,7 @@ const Pramote = ({title})=>{
         <div className="flex justify-center">
             <div className="container px-4">
             <h1 className="text-[20px] font-semibold text-center">{title}</h1>
-                <div className="flex justify-between py-12">
+                <div className="flex lg:justify-between py-12 flex-col lg:flex-row items-center ">
                         {
                             data.map((items,index)=><div key={index}>
                             <Image src={items.image} width={300} height={200} alt="image" />

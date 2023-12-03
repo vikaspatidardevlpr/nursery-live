@@ -12,8 +12,14 @@ import {
 import { Rate } from "antd";
 import Image from "next/image";
 import { SwiperSlide } from "swiper/react";
+import { useRouter } from "next/router";
 
 const Cards = ({ data }) => {
+  const route = useRouter();
+  const handleRoute = (title)=>{
+    const cardName = title.replaceAll(" ","-");
+    route.push(`/products/${cardName}`)
+  }
   return (
     <Card
     w="100%" 
@@ -26,7 +32,7 @@ const Cards = ({ data }) => {
       }}
       cursor="pointer"
     >
-      <CardBody>
+      <CardBody onClick={()=>handleRoute(data.title)}>
         <div className="relative">
           <Image src={data.image} width={300} height={80} alt={data.title} />
           <div className="bg-[#FF6B6B] w-fit px-1 text-white absolute bottom-0">
@@ -39,7 +45,7 @@ const Cards = ({ data }) => {
         <h1 className="text-2xl font-semibold text-[#FF6B6B]">
           ₹ {data.price}
         </h1>
-        <p className="text-[#4D4D4D] overflow-hidden whitespace-nowrap text-ellipsis w-[200px]" title={data.title}>{data.title}</p>
+        <p className="text-[#4D4D4D] overflow-hidden whitespace-nowrap text-ellipsis w-[200px] hover:text-red-500" title={data.title}>{data.title}</p>
         <Rate
           defaultValue={data.rate}
           className="text-xs text-yellow-400"

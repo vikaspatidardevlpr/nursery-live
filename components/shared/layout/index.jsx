@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { ChakraProvider } from '@chakra-ui/react'
 import {
@@ -390,6 +391,8 @@ const selectMenu = (
   </Select>
 );
 const Layout = ({children}) => {
+  const pathName = usePathname();
+  const currentPath = pathName.includes("/collections")
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [menuClose, setMenuClose] = useState({
     type: false,
@@ -460,19 +463,21 @@ const Layout = ({children}) => {
               <h1 className="font-semibold text-slate-600 text-lg py-2">
                 {nistedItem.name}
               </h1>
-              {nistedItem.content.map((list, index) =>
-                nistedItem.nisted ? (
-                  <p key={index} className="py-4">
+              {nistedItem.content.map((list, index) =>{
+                const listName = currentPath ? list.replaceAll(" ","-") : "collections/"+list.replaceAll(" ","-");
+               return nistedItem.nisted ? (
+                  <Link href={`${listName}`} key={index} className="py-4 block">
                     {list} <i className="bx bx-chevron-right"></i>
-                  </p>
+                  </Link>
                 ) : (
-                  <p
+                  <Link href={`${listName}`}
                     key={index}
-                    className="py-1 hover:text-red-500 font-normal"
+                    className="py-1 hover:text-red-500 font-normal block"
                   >
                     {list}
-                  </p>
+                  </Link>
                 )
+  }
               )}
             </div>
           </div>
@@ -515,7 +520,7 @@ const Layout = ({children}) => {
               onClick={onOpen}
               ref={btnRef}
             ></i>
-            <img src="images/logo.avif" className="w-[150px]" />
+            <img src="/images/logo.avif" className="w-[150px]" />
           </div>
           <div className="w-4/5 hidden md:block">
             <Stack w="100%" boxShadow="md">

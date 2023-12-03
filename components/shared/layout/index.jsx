@@ -392,7 +392,7 @@ const selectMenu = (
 );
 const Layout = ({children}) => {
   const pathName = usePathname();
-  const currentPath = pathName.includes("/collections")
+  const currentPath = pathName?.includes("/collections")
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [menuClose, setMenuClose] = useState({
     type: false,

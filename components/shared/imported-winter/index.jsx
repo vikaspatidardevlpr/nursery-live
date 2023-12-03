@@ -2,6 +2,9 @@ import Image from "next/image";
 import {
     Button,
 } from "@chakra-ui/react";
+
+import { useRouter } from "next/router";
+
 const data = [
     {
         name: "Ranunculus Flower Bulbs",
@@ -29,13 +32,19 @@ const data = [
     }
 ]
 const ImportedWinter = () => {
+    const router = useRouter();
+    const pathName = router.pathname?.includes("/collections");
+    const handler = (title)=>{
+        const titleFormat = title.replaceAll(" ","-");
+            pathName ? router.push(titleFormat) : router.push(`collections/${titleFormat}`)
+    }
     return (
        <div className="flex justify-center">
          <div className="container py-8 lg:pt-0">
             <h1 className="text-[20px] font-semibold text-center">Imported Winter Flower Bulbs</h1>
             <div className="flex mt-4 justify-around flex-wrap px-2 lg:px-0">
                 {
-                    data.map((item, index) => <div key={index} className="py-4 cursor-pointer">
+                    data.map((item, index) => <div key={index} className="py-4 cursor-pointer" onClick={()=>handler(item.name)}>
                         <Image src={item.image} width={175} height={100} className="rounded-full" />
                         <p className="text-center text-[#FF6B6B] font-semibold py-4">{item.name}</p>
                     </div>)

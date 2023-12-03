@@ -39,7 +39,7 @@ const Cards = ({ data }) => {
         <h1 className="text-2xl font-semibold text-[#FF6B6B]">
           ₹ {data.price}
         </h1>
-        <p className="text-[#4D4D4D] overflow-hidden whitespace-nowrap text-ellipsis" title={data.title}>{data.title}</p>
+        <p className="text-[#4D4D4D] overflow-hidden whitespace-nowrap text-ellipsis w-[200px]" title={data.title}>{data.title}</p>
         <Rate
           defaultValue={data.rate}
           className="text-xs text-yellow-400"

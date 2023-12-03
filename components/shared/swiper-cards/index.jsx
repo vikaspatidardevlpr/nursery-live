@@ -118,11 +118,11 @@ const cardData = [
   }
 ];
 
-const SwiperCards = () => {
+const SwiperCards = ({title}) => {
   return (
     <div className="flex justify-center mt-10 pt-8">
       <div className="container md:min-h-[500px] py-0 my-0">
-        <h1 className="text-[20px] text-center font-semibold text-[#4D4D4D]">Value For Money - Upto 35% Off</h1>
+        <h1 className="text-[20px] text-center font-semibold text-[#4D4D4D]">{title}</h1>
         <Swiper
          breakpoints={{
           300: {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
-import axios from 'axios';
+import axios from "axios";
 import {
   Input,
   InputLeftAddon,
@@ -417,15 +417,21 @@ const Layout = ({ children }) => {
   });
   const [menuData, setMenuData] = useState([]);
   const [handleScroll, setHandleScroll] = useState(true);
-  const [formSwitch,setFormSwitch] = useState("login");
+  const [navPosition, setNavPosition] = useState(true);
+  const [formSwitch, setFormSwitch] = useState("login");
   const btnRef = useRef();
   const cancelRef = useRef();
 
-  const designMenu = () => {
-    Math.floor(window.scrollY) > 199
-      ? setHandleScroll(false)
-      : setHandleScroll(true);
+
+  // Your designMenu function
+  const designMenu = (e) => {
+    console.log(Math.floor(window.scrollY))
+    Math.floor(window.scrollY) >  100 ? setNavPosition(false) : setNavPosition(true)
+    Math.floor(window.scrollY) >  199 ? setHandleScroll(false) : setHandleScroll(true) 
   };
+  
+  // Debounce the designMenu function with a 200 milliseconds delay
+  
 
   useEffect(() => {
     window.addEventListener("scroll", designMenu);
@@ -433,13 +439,6 @@ const Layout = ({ children }) => {
       window.removeEventListener("scroll", designMenu);
     };
   }, []);
-
-  //   useEffect(() => {
-  //     window.addEventListener("scroll", handleScroll);
-  //     return () => {
-  //         window.removeEventListener("scroll", handleScroll);
-  //     };
-  // }, []);
 
   const handlerMenu = (e, menuItem) => {
     setMenuClose({
@@ -449,20 +448,23 @@ const Layout = ({ children }) => {
     setMenuData(menuItem.content);
   };
 
-  const handleForm = async (e,formName)=>{
-      e.preventDefault()
-      const formData = {};
-      Array.from(e.target).forEach((item)=>{
-        item.name && (formData[item.name] = item.value);
-      })
+  const handleForm = async (e, formName) => {
+    e.preventDefault();
+    const formData = {};
+    Array.from(e.target).forEach((item) => {
+      item.name && (formData[item.name] = item.value);
+    });
 
-     const {data,status} =  await axios.post("http://127.0.0.1:4000/signup",formData)
-      console.log(data);
-  }
+    const { data, status } = await axios.post(
+      "http://127.0.0.1:4000/signup",
+      formData
+    );
+    console.log(data);
+  };
 
   const SignupUi = () => (
-    <form onSubmit={(e)=>handleForm(e,"signup")}>
-       <FormControl isRequired>
+    <form onSubmit={(e) => handleForm(e, "signup")}>
+      <FormControl isRequired>
         <FormLabel>Fullname</FormLabel>
         <Input placeholder="FullName" type="text" name="fullname" />
       </FormControl>
@@ -482,14 +484,18 @@ const Layout = ({ children }) => {
         <Button my={4} colorScheme="red" type="submit">
           Create Account
         </Button>
-        <p className="text-sm cursor-pointer pb-2" onClick={()=>setFormSwitch("login")}>Login account ?</p>
-
+        <p
+          className="text-sm cursor-pointer pb-2"
+          onClick={() => setFormSwitch("login")}
+        >
+          Login account ?
+        </p>
       </div>
     </form>
   );
 
   const LoginUi = () => (
-    <form onSubmit={(e)=>handleForm(e,"login")}>
+    <form onSubmit={(e) => handleForm(e, "login")}>
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
         <Input placeholder="Email" type="email" name="email" />
@@ -503,8 +509,12 @@ const Layout = ({ children }) => {
           Login
         </Button>
         <p className="text-sm cursor-pointer">Forget Password ? </p>
-        <p className="text-sm cursor-pointer pb-2" onClick={()=>setFormSwitch("signup")}>Create account ?</p>
-
+        <p
+          className="text-sm cursor-pointer pb-2"
+          onClick={() => setFormSwitch("signup")}
+        >
+          Create account ?
+        </p>
       </div>
     </form>
   );
@@ -518,10 +528,12 @@ const Layout = ({ children }) => {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{formSwitch=="login" ? "Login !" : "Create account !"}</ModalHeader>
+        <ModalHeader>
+          {formSwitch == "login" ? "Login !" : "Create account !"}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-        {formSwitch=="login" ? <LoginUi /> : <SignupUi />}
+          {formSwitch == "login" ? <LoginUi /> : <SignupUi />}
         </ModalBody>
       </ModalContent>
     </Modal>
@@ -618,7 +630,7 @@ const Layout = ({ children }) => {
 
       {/* main menu design */}
       <nav
-        className={`shadow sticky top-0 z-30 bg-white transition-all ${
+        className={`shadow w-full ${navPosition ? 'sticky' : 'fixed'} top-0 z-30 bg-white transition-all ${
           handleScroll ? "md:h-32" : "md:h-[70px] overflow-hidden"
         }`}
       >
@@ -721,7 +733,7 @@ const Layout = ({ children }) => {
       </nav>
 
       {/* ########### section start ############## */}
-      <section className="py-4">{children}</section>
+      <section className="pt-[150px]">{children}</section>
 
       {/* ################ section complete ##################### */}
 

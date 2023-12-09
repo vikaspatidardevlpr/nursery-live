@@ -10,14 +10,14 @@ import Pramotation from "./pramotion";
 const Home = ()=>{
     return (
         <Layout>
-            <Hero></Hero>
-            <SwiperCards title="Value For Money - Upto 35% Off"></SwiperCards>
-            <ImportedWinter></ImportedWinter>
-            <Popular></Popular>
-            <Tranding></Tranding>
-            <GardenDecor></GardenDecor>
+            <Hero />
+            <SwiperCards title="Value For Money - Upto 35% Off" />
+            <ImportedWinter />
+            <Popular />
+            <Tranding />
+            <GardenDecor />
             <Blog></Blog>
-            <Pramotation></Pramotation>
+            <Pramotation />
         </Layout>
     )
 }

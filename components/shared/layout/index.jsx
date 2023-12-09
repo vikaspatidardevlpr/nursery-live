@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 import {
   Input,
   InputLeftAddon,
@@ -19,6 +19,15 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 
 const topMenu = [
@@ -390,28 +399,39 @@ const selectMenu = (
     <option value="option3">Option 3</option>
   </Select>
 );
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   const pathName = usePathname();
-  const currentPath = pathName?.includes("/collections")
+  const currentPath = pathName?.includes("/collections");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenModal,
+    onOpen: onOpenModal,
+    onClose: onCloseModal,
+  } = useDisclosure();
+
   const [menuClose, setMenuClose] = useState({
     type: false,
     spacing: 0,
   });
   const [menuData, setMenuData] = useState([]);
-  const [handleScroll,setHandleScroll] = useState(true);
+  const [handleScroll, setHandleScroll] = useState(true);
+  const [formSwitch,setFormSwitch] = useState("login");
   const btnRef = useRef();
+  const cancelRef = useRef();
 
-  const designMenu = ()=>{
-    Math.floor(window.scrollY) > 199 ? setHandleScroll(false) : setHandleScroll(true);
-    
-   }
+  const designMenu = () => {
+    Math.floor(window.scrollY) > 199
+      ? setHandleScroll(false)
+      : setHandleScroll(true);
+  };
 
-    useEffect(()=>{
-        window.addEventListener("scroll",designMenu);
-        return ()=> {window.removeEventListener("scroll",designMenu)};   
-    },[])
- 
+  useEffect(() => {
+    window.addEventListener("scroll", designMenu);
+    return () => {
+      window.removeEventListener("scroll", designMenu);
+    };
+  }, []);
 
   //   useEffect(() => {
   //     window.addEventListener("scroll", handleScroll);
@@ -427,6 +447,83 @@ const Layout = ({children}) => {
     });
     setMenuData(menuItem.content);
   };
+
+  const handleForm = (e)=>{
+      e.preventDefault()
+      const formData = {};
+      Array.from(e.target).forEach((item)=>{
+        item.name && (formData[item.name] = item.value);
+      })
+
+      console.log(formData);
+  }
+
+  const SignupUi = () => (
+    <form onSubmit={(e)=>handleForm(e,"signup")}>
+       <FormControl isRequired>
+        <FormLabel>Fullname</FormLabel>
+        <Input placeholder="FullName" type="text" name="fullname" />
+      </FormControl>
+      <FormControl isRequired my="10px">
+        <FormLabel>Email</FormLabel>
+        <Input placeholder="Email" type="email" name="email" />
+      </FormControl>
+      <FormControl isRequired my="10px">
+        <FormLabel>Password</FormLabel>
+        <Input placeholder="Password" type="password" name="password" />
+      </FormControl>
+      <FormControl isRequired my="10px">
+        <FormLabel>Mobile</FormLabel>
+        <Input placeholder="Mobile" type="number" name="number" />
+      </FormControl>
+      <div className="flex flex-col items-end gap-1">
+        <Button my={4} colorScheme="red" type="submit">
+          Create Account
+        </Button>
+        <p className="text-sm cursor-pointer pb-2" onClick={()=>setFormSwitch("login")}>Login account ?</p>
+
+      </div>
+    </form>
+  );
+
+  const LoginUi = () => (
+    <form onSubmit={(e)=>handleForm(e,"login")}>
+      <FormControl isRequired>
+        <FormLabel>Email</FormLabel>
+        <Input placeholder="Email" type="email" name="email" />
+      </FormControl>
+      <FormControl isRequired my="10px">
+        <FormLabel>Password</FormLabel>
+        <Input placeholder="Password" type="password" name="password" />
+      </FormControl>
+      <div className="flex flex-col items-end gap-1">
+        <Button my={4} colorScheme="red" type="submit">
+          Login
+        </Button>
+        <p className="text-sm cursor-pointer">Forget Password ? </p>
+        <p className="text-sm cursor-pointer pb-2" onClick={()=>setFormSwitch("signup")}>Create account ?</p>
+
+      </div>
+    </form>
+  );
+
+  const ModalComponent = () => (
+    <Modal
+      isOpen={isOpenModal}
+      onClose={onCloseModal}
+      closeOnOverlayClick={false}
+      isCentered
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{formSwitch=="login" ? "Login !" : "Create account !"}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+        {formSwitch=="login" ? <LoginUi /> : <SignupUi />}
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
 
   const DrawerComponent = () => (
     <Drawer
@@ -463,22 +560,24 @@ const Layout = ({children}) => {
               <h1 className="font-semibold text-slate-600 text-lg py-2">
                 {nistedItem.name}
               </h1>
-              {nistedItem.content.map((list, index) =>{
-                const listName = currentPath ? list.replaceAll(" ","-") : "collections/"+list.replaceAll(" ","-");
-               return nistedItem.nisted ? (
+              {nistedItem.content.map((list, index) => {
+                const listName = currentPath
+                  ? list.replaceAll(" ", "-")
+                  : "collections/" + list.replaceAll(" ", "-");
+                return nistedItem.nisted ? (
                   <Link href={`${listName}`} key={index} className="py-4 block">
                     {list} <i className="bx bx-chevron-right"></i>
                   </Link>
                 ) : (
-                  <Link href={`${listName}`}
+                  <Link
+                    href={`${listName}`}
                     key={index}
                     className="py-1 hover:text-red-500 font-normal block"
                   >
                     {list}
                   </Link>
-                )
-  }
-              )}
+                );
+              })}
             </div>
           </div>
         ))}
@@ -489,6 +588,7 @@ const Layout = ({children}) => {
   return (
     <ChakraProvider>
       <DrawerComponent></DrawerComponent>
+      <ModalComponent></ModalComponent>
       {/* top menu design */}
       <nav className="w-full border border-t-0 md:flex items-center p-3 px-6 justify-between hidden">
         <div className="flex gap-5 items-center">
@@ -506,17 +606,30 @@ const Layout = ({children}) => {
         {/* top menu icon design */}
         <div>
           {topMenuIcon.map((iconName, index) => (
-            <i key={index} className={`bx bxl-${iconName} text-lg text-[#949494] px-2`}></i>
+            <i
+              key={index}
+              className={`bx bxl-${iconName} text-lg text-[#949494] px-2`}
+            ></i>
           ))}
         </div>
       </nav>
 
       {/* main menu design */}
-      <nav className={`shadow sticky top-0 z-30 bg-white transition-all ${handleScroll ? 'md:h-32' : 'md:h-[70px] overflow-hidden'}`}>
-        <div className={`flex flex-nowrap items-center justify-start px-6 gap-5 py-2 pt-4 transition-all ${handleScroll ? 'md:py-5' : 'md:py-2'}`}>
+      <nav
+        className={`shadow sticky top-0 z-30 bg-white transition-all ${
+          handleScroll ? "md:h-32" : "md:h-[70px] overflow-hidden"
+        }`}
+      >
+        <div
+          className={`flex flex-nowrap items-center justify-start px-6 gap-5 py-2 pt-4 transition-all ${
+            handleScroll ? "md:py-5" : "md:py-2"
+          }`}
+        >
           <div className="w-full md:w-auto md:shrink-0 flex items-center gap-4">
             <i
-              className={`bx bx-menu-alt-left text-3xl cursor-pointer ${handleScroll ? 'md:hidden' : ''}`}
+              className={`bx bx-menu-alt-left text-3xl cursor-pointer ${
+                handleScroll ? "md:hidden" : ""
+              }`}
               onClick={onOpen}
               ref={btnRef}
             ></i>
@@ -537,7 +650,7 @@ const Layout = ({children}) => {
             </Stack>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 hover:cursor-pointer">
             <i className="bx bx-conversation md:text-3xl text-2xl"></i>
             <div className="hidden lg:block">
               <h1 className="font-semibold text-sm w-28">Expert Support</h1>
@@ -545,21 +658,24 @@ const Layout = ({children}) => {
             </div>
           </div>
 
-          <div className="lg:flex items-center gap-2 hidden">
+          <div
+            className="lg:flex items-center gap-2 hidden hover:cursor-pointer"
+            onClick={onOpenModal}
+          >
             <i className="bx bx-user text-3xl"></i>
             <div>
               <h1 className="font-semibold text-sm">Login</h1>
             </div>
           </div>
 
-          <i className="bx bx-cart md:text-3xl text-2xl"></i>
+          <i className="bx bx-cart md:text-3xl text-2xl hover:cursor-pointer"></i>
         </div>
 
         <div className="px-6 gap-5 py-2 md:hidden">
           <Stack w="100%" boxShadow="md">
             <InputGroup size="lg" w="100%">
               <InputLeftAddon w="20%" children={selectMenu} bg="#eee" p={0} />
-              <Input placeholder="mysite" />
+              <Input placeholder="mysite" shadow />
               <InputRightAddon
                 children={
                   <i className={`bx bx-search text-lg text-white px-2`}></i>
@@ -571,7 +687,7 @@ const Layout = ({children}) => {
         </div>
 
         {/* ######## main menu coding start ######## */}
-        <div className='md:flex gap-6 px-6 pb-4 font-semibold relative hidden '>
+        <div className="md:flex gap-6 px-6 pb-4 font-semibold relative hidden ">
           {mainMenu.map((menuItem, index) =>
             menuItem.nisted ? (
               <p
@@ -584,7 +700,9 @@ const Layout = ({children}) => {
                 <i className="bx bx-chevron-down"></i>
               </p>
             ) : (
-              <p key={index} className="cursor-pointer">{menuItem.name}</p>
+              <p key={index} className="cursor-pointer">
+                {menuItem.name}
+              </p>
             )
           )}
           <div
@@ -601,11 +719,7 @@ const Layout = ({children}) => {
       </nav>
 
       {/* ########### section start ############## */}
-      <section className="py-4">
-            {
-              children
-            }
-      </section>
+      <section className="py-4">{children}</section>
 
       {/* ################ section complete ##################### */}
 
@@ -667,7 +781,10 @@ const Layout = ({children}) => {
             Nurserylive: Largest Garden Store in India
           </h1>
           {lastFooterMenu.map((item, index) => (
-            <p key={index} className="font-semibold text-slate-600 text-sm pb-3 pr-4 text-justify">
+            <p
+              key={index}
+              className="font-semibold text-slate-600 text-sm pb-3 pr-4 text-justify"
+            >
               {item.name} <span className="font-normal">{item.content}</span>
             </p>
           ))}
@@ -680,7 +797,7 @@ const Layout = ({children}) => {
           <p className="text-slate-500">Copyright © 2023 Nurserylive.</p>
         </div>
       </footer>
-      </ChakraProvider>
+    </ChakraProvider>
   );
 };
 

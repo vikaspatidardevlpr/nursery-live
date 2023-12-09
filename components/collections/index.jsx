@@ -12,14 +12,14 @@ const Collections = ()=>{
     const router = useRouter();
     return (
             <Layout>
-                <HeadingText route={router.query}></HeadingText>
-                <CardSections></CardSections>
-                <SwiperCards title="Best sellers"></SwiperCards>
-                <Tranding></Tranding>
-                <Pramote title={`Save 40% with ${router.query.slug} Solutions`}></Pramote>
-                <Pramote title="You may also need"></Pramote>
-                <ImportedWinter></ImportedWinter>
-                <AboutPage></AboutPage>
+                <HeadingText route={router.query} />
+                <CardSections />
+                <SwiperCards title="Best sellers" />
+                <Tranding />
+                <Pramote title={`Save 40% with ${router.query.slug} Solutions`} />
+                <Pramote title="You may also need" />
+                <ImportedWinter />
+                <AboutPage />
             </Layout>
     )   
 

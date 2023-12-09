@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
+import axios from 'axios';
 import {
   Input,
   InputLeftAddon,
@@ -448,14 +449,15 @@ const Layout = ({ children }) => {
     setMenuData(menuItem.content);
   };
 
-  const handleForm = (e)=>{
+  const handleForm = async (e,formName)=>{
       e.preventDefault()
       const formData = {};
       Array.from(e.target).forEach((item)=>{
         item.name && (formData[item.name] = item.value);
       })
 
-      console.log(formData);
+     const {data,status} =  await axios.post("http://127.0.0.1:4000/signup",formData)
+      console.log(data);
   }
 
   const SignupUi = () => (

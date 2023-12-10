@@ -29,6 +29,8 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
+  Alert,
+  AlertIcon
 } from "@chakra-ui/react";
 
 const topMenu = [
@@ -400,6 +402,149 @@ const selectMenu = (
     <option value="option3">Option 3</option>
   </Select>
 );
+
+const SignupUi = ({setFormSwitch}) => {
+  const [formData,setFormData] = useState(null);
+  const [response,setResponse] = useState(null)
+  const [isLoading,setIsLoading] = useState(false);
+  const handleForm = async (e, formName) => {
+    e.preventDefault();
+    const currentData = {};
+    setIsLoading(true);
+    Array.from(e.target).forEach((item) => {
+      item.name && (currentData[item.name] = item.value);
+    });
+    setFormData(currentData);
+
+    try{
+      const { data, status } = await axios.post(
+        "http://127.0.0.1:4000/signup",
+        currentData
+      );
+      // setResponse({message:"user created !",status})
+      console.log("success",data);
+      setResponse(data);
+      setTimeout(()=>{
+        setFormSwitch("login")
+      },1000);
+
+    }
+    catch(error){
+      setResponse(error.response.data);
+    }
+    finally{
+    setIsLoading(false);
+    }
+    
+  };
+
+  return (
+  <form onSubmit={(e) => handleForm(e, "signup")}>
+    <FormControl isRequired>
+      <FormLabel>Fullname</FormLabel>
+      <Input placeholder="FullName" type="text" name="fullname" />
+    </FormControl>
+    <FormControl isRequired my="10px">
+      <FormLabel>Email</FormLabel>
+      <Input placeholder="Email" type="email" name="email" />
+    </FormControl>
+    <FormControl isRequired my="10px">
+      <FormLabel>Password</FormLabel>
+      <Input placeholder="Password" type="password" name="password" />
+    </FormControl>
+    <FormControl isRequired my="10px">
+      <FormLabel>Mobile</FormLabel>
+      <Input placeholder="Mobile" type="number" name="number" />
+    </FormControl>
+    <div className="flex flex-col items-end gap-1">
+    {
+      response && <Alert status={response?.status==200 ? 'success' : 'error'}>
+      <AlertIcon />
+      {
+        response?.status==200 ? response?.message : response?.error
+      }
+      </Alert>
+    }
+
+      <Button my={4} colorScheme="red" type="submit" isLoading={isLoading}>
+        Create Account
+      </Button>
+      <p
+        className="text-sm cursor-pointer pb-2"
+        onClick={() => setFormSwitch("login")}
+      >
+        Login account ?
+      </p>
+    </div>
+  </form>
+)};
+
+const LoginUi = ({setFormSwitch}) => {
+  const [formData,setFormData] = useState(null);
+  const [response,setResponse] = useState(null)
+  const [isLoading,setIsLoading] = useState(false);
+  const handleForm = async (e) => {
+    e.preventDefault();
+    const currentData = {};
+    setIsLoading(true);
+    Array.from(e.target).forEach((item) => {
+      item.name && (currentData[item.name] = item.value);
+    });
+    setFormData(currentData);
+
+    try{
+      const { data, status } = await axios.post(
+        "http://127.0.0.1:4000/signup",
+        currentData
+      );
+      // setResponse({message:"user created !",status})
+      console.log("success",data);
+      setResponse(data);
+      setTimeout(()=>{
+        setFormSwitch("login")
+      },1000);
+
+    }
+    catch(error){
+      setResponse(error.response.data);
+    }
+    finally{
+    setIsLoading(false);
+    }
+    
+  };
+  return (
+  <form onSubmit={(e) => handleForm(e, "login")}>
+    <FormControl isRequired>
+      <FormLabel>Email</FormLabel>
+      <Input placeholder="Email" type="email" name="email" />
+    </FormControl>
+    <FormControl isRequired my="10px">
+      <FormLabel>Password</FormLabel>
+      <Input placeholder="Password" type="password" name="password" />
+    </FormControl>
+    <div className="flex flex-col items-end gap-1">
+    {
+      response && <Alert status={response?.status==200 ? 'success' : 'error'}>
+      <AlertIcon />
+      {
+        response?.status==200 ? response?.message : response?.error
+      }
+      </Alert>
+    }
+      <Button my={4} colorScheme="red" type="submit" isLoading={isLoading}>
+        Login
+      </Button>
+      <p className="text-sm cursor-pointer">Forget Password ? </p>
+      <p
+        className="text-sm cursor-pointer pb-2"
+        onClick={() => setFormSwitch("signup")}
+      >
+        Create account ?
+      </p>
+    </div>
+  </form>
+)};
 const Layout = ({ children }) => {
   const pathName = usePathname();
   const currentPath = pathName?.includes("/collections");
@@ -448,77 +593,6 @@ const Layout = ({ children }) => {
     setMenuData(menuItem.content);
   };
 
-  const handleForm = async (e, formName) => {
-    e.preventDefault();
-    const formData = {};
-    Array.from(e.target).forEach((item) => {
-      item.name && (formData[item.name] = item.value);
-    });
-
-    const { data, status } = await axios.post(
-      "http://127.0.0.1:4000/signup",
-      formData
-    );
-    console.log(data);
-  };
-
-  const SignupUi = () => (
-    <form onSubmit={(e) => handleForm(e, "signup")}>
-      <FormControl isRequired>
-        <FormLabel>Fullname</FormLabel>
-        <Input placeholder="FullName" type="text" name="fullname" />
-      </FormControl>
-      <FormControl isRequired my="10px">
-        <FormLabel>Email</FormLabel>
-        <Input placeholder="Email" type="email" name="email" />
-      </FormControl>
-      <FormControl isRequired my="10px">
-        <FormLabel>Password</FormLabel>
-        <Input placeholder="Password" type="password" name="password" />
-      </FormControl>
-      <FormControl isRequired my="10px">
-        <FormLabel>Mobile</FormLabel>
-        <Input placeholder="Mobile" type="number" name="number" />
-      </FormControl>
-      <div className="flex flex-col items-end gap-1">
-        <Button my={4} colorScheme="red" type="submit">
-          Create Account
-        </Button>
-        <p
-          className="text-sm cursor-pointer pb-2"
-          onClick={() => setFormSwitch("login")}
-        >
-          Login account ?
-        </p>
-      </div>
-    </form>
-  );
-
-  const LoginUi = () => (
-    <form onSubmit={(e) => handleForm(e, "login")}>
-      <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input placeholder="Email" type="email" name="email" />
-      </FormControl>
-      <FormControl isRequired my="10px">
-        <FormLabel>Password</FormLabel>
-        <Input placeholder="Password" type="password" name="password" />
-      </FormControl>
-      <div className="flex flex-col items-end gap-1">
-        <Button my={4} colorScheme="red" type="submit">
-          Login
-        </Button>
-        <p className="text-sm cursor-pointer">Forget Password ? </p>
-        <p
-          className="text-sm cursor-pointer pb-2"
-          onClick={() => setFormSwitch("signup")}
-        >
-          Create account ?
-        </p>
-      </div>
-    </form>
-  );
-
   const ModalComponent = () => (
     <Modal
       isOpen={isOpenModal}
@@ -533,7 +607,7 @@ const Layout = ({ children }) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {formSwitch == "login" ? <LoginUi /> : <SignupUi />}
+          {formSwitch == "login" ? <LoginUi setFormSwitch={setFormSwitch} /> : <SignupUi setFormSwitch={setFormSwitch} />}
         </ModalBody>
       </ModalContent>
     </Modal>
